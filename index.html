@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <title>Pig Latin Converter</title> 
+</head>
+<body>
+    <body { 
+        background-color: #DBF9FC; 
+    }> 
+    <h1>Pig Latin Converter</h1>
+    <label for="inputText">Enter your phrase:</label>
+    <input type="text" id="inputText" />
+    <button onclick="convertToPigLatin()">Convert</button> 
+    
+    <p id="outputText"></p>
+    
+    <script>
+        
+        function convertToPigLatin() {
+            const inputText = document.getElementById("inputText").value.trim();
+            const outputText = document.getElementById("outputText");
+
+            if (!inputText) {
+                outputText.textContent = "Please enter a phrase.";
+                return;
+            }
+
+            const words = inputText.split(" ");
+            const pigLatinWords = words.map(convertWordToPigLatin);
+            const pigLatinSentence = pigLatinWords.join(" ");
+            outputText.textContent = pigLatinSentence;
+        }
+
+        function convertWordToPigLatin(word) {
+            const vowels = ["a", "e", "i", "o", "u"];
+            const firstChar = word.charAt(0);
+
+            if (vowels.includes(firstChar.toLowerCase())) {
+                // Word starts with a vowel
+                return word + "way";
+            } else {
+                // Word starts with a consonant 
+                const firstVowelIndex = word.search(/[aeiou]/i);
+                const beginning = word.slice(0, firstVowelIndex);
+                const rest = word.slice(firstVowelIndex);
+                return rest + beginning + "ay";
+            }
+        }
+    </script>
+</body>
+</html>
